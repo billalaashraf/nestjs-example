@@ -5,6 +5,7 @@ import { SearchService } from './search/search.service';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { dbConfig } from './database/config/dbConfig';
+import { BookSchema } from './database/schemas/books.schema';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { dbConfig } from './database/config/dbConfig';
         dbConfig().database
       }`,
     ),
+    MongooseModule.forFeature([{ name: 'Book', schema: BookSchema }]),
     SearchModule,
   ],
   controllers: [SearchController],
