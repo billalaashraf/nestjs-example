@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { dbConfig } from './database/config/dbConfig';
 import { BookSchema } from './database/schemas/books.schema';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { BookSchema } from './database/schemas/books.schema';
       }`,
     ),
     MongooseModule.forFeature([{ name: 'Book', schema: BookSchema }]),
+    HttpModule,
     SearchModule,
   ],
   controllers: [SearchController],

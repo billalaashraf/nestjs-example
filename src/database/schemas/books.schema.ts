@@ -16,7 +16,7 @@ export class Book {
 
   @Prop(
     raw({
-      $date: { type: Date },
+      date: { type: String },
       price: { type: Number },
       currency: { type: String },
     }),
