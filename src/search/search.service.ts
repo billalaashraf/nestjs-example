@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectConnection, InjectModel } from '@nestjs/mongoose';
 import { Connection, Model } from 'mongoose';
-import { CreateBookDto, mapDTO } from 'src/database/dtos/book.dto';
-import { Book, BookDocument } from 'src/database/schemas/books.schema';
 import { HttpService } from '@nestjs/axios';
+import { CreateBookDto, mapDTO } from '../database/dtos/book.dto';
+import { Book, BookDocument } from '../database/schemas/books.schema';
 @Injectable()
 export class SearchService {
   constructor(
@@ -29,7 +29,7 @@ export class SearchService {
     }
   }
 
-  async search(query: any): Promise<BookDocument[]> {
+  async search(query: any): Promise<Book[]> {
     if (!query) {
       return this.bookModel.find();
     }
@@ -37,11 +37,11 @@ export class SearchService {
     return this.bookModel.find({ $and: [search] });
   }
 
-  async create(book: CreateBookDto): Promise<BookDocument> {
+  async create(book: CreateBookDto): Promise<Book> {
     return this.bookModel.create(mapDTO(book));
   }
 
-  private searchQuery(query: any): any {
+  searchQuery(query: any): any {
     let mongoQuery = {};
     if (query.title) {
       mongoQuery = { ...mongoQuery, title: { $regex: `.*${query.title}.*` } };
