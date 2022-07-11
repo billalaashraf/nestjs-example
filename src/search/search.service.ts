@@ -42,17 +42,73 @@ export class SearchService {
   }
 
   private searchQuery(query: any): any {
-    const returnObj = {};
+    let mongoQuery = {};
     if (query.title) {
-      returnObj['title'] = { $regex: `.*${query.title}.*` };
+      mongoQuery = { ...mongoQuery, title: { $regex: `.*${query.title}.*` } };
     }
     if (query.isbn) {
-      returnObj['isbn'] = { $regex: `.*${query.isbn}.*` };
+      mongoQuery = { ...mongoQuery, isbn: { $regex: `.*${query.isbn}.*` } };
     }
-    if (query.price) {
-      returnObj['published'] = {};
-      returnObj['published']['price'] = { $eq: Number(query.price) };
+    if (query.pageCount && !isNaN(query.pageCount)) {
+      mongoQuery = {
+        ...mongoQuery,
+        pageCount: Number(query.pageCount),
+      };
     }
-    return returnObj;
+    if (query.date) {
+      mongoQuery = {
+        ...mongoQuery,
+        'published.date': { $regex: `.*${query.date}.*` },
+      };
+    }
+    if (query.price && !isNaN(query.price)) {
+      mongoQuery = { ...mongoQuery, 'published.price': Number(query.price) };
+    }
+    if (query.currency) {
+      mongoQuery = {
+        ...mongoQuery,
+        'published.currency': {
+          $regex: `.*${String(query.currency).toUpperCase()}.*`,
+        },
+      };
+    }
+    if (query.description) {
+      mongoQuery = {
+        ...mongoQuery,
+        shortDescription: {
+          $regex: `.*${query.description}.*`,
+        },
+        longDescription: {
+          $regex: `.*${query.description}.*`,
+        },
+      };
+    }
+
+    if (query.status) {
+      mongoQuery = {
+        ...mongoQuery,
+        status: {
+          $regex: `.*${String(query.status).toUpperCase()}.*`,
+        },
+      };
+    }
+
+    if (query.author) {
+      mongoQuery = {
+        ...mongoQuery,
+        authors: {
+          $regex: `.*${query.author}.*`,
+        },
+      };
+    }
+    if (query.category) {
+      mongoQuery = {
+        ...mongoQuery,
+        categories: {
+          $regex: `.*${query.category}.*`,
+        },
+      };
+    }
+    return mongoQuery;
   }
 }

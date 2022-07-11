@@ -23,6 +23,6 @@ import { HttpModule } from '@nestjs/axios';
     SearchModule,
   ],
   controllers: [SearchController],
-  providers: [SearchService],
+  providers: [],
 })
 export class AppModule {}

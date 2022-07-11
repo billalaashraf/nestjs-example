@@ -36,7 +36,7 @@ export class Book {
   status: string;
 
   @Prop()
-  authost: string[];
+  authors: string[];
 
   @Prop()
   categories: string[];
