@@ -7,6 +7,20 @@
 ```bash
 $ npm install
 ```
+
+## Environemnt Setup
+create a .env file in the root of the project with the following code. 
+
+```
+NODE_ENV=development
+SERVER_PORT=3003
+DB_HOST=localhost
+DB_PORT=27017
+DB_USERNAME=root
+DB_PASSWORD=""
+DB_NAME=bookstore
+DB_TYPE=mongodb
+```
 ## API
 
 ```bash
